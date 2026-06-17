@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<title>Geoportal Áreas Verdes México</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+<style>
+body {
+margin: 0;
+font-family: Arial;
+background: #111;
+color: white;
+}
+
+#panel {
+position: absolute;
+top: 10px;
+left: 10px;
+z-index: 1000;
+width: 320px;
+padding: 15px;
+background: rgba(20,20,20,0.95);
+border-radius: 10px;
+}
+
+#map {
+height: 100vh;
+}
+
+select {
+width: 100%;
+padding: 10px;
+font-size: 15px;
+}
+
+/* LEYENDA */
+.legend {
+background: rgba(20,20,20,0.9);
+padding: 10px;
+border-radius: 8px;
+color: white;
+font-size: 13px;
+line-height: 18px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="panel">
+<h2>Geoportal Áreas Verdes México</h2>
+<p>Geografia_en_VIZ</p>
+
+<select id="selector">
+<option value="">Selecciona una ciudad</option>
+</select>
+</div>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+
+// =======================
+// MAPA BASE
+// =======================
+const map = L.map('map').setView([23, -102], 5);
+
+L.tileLayer(
+'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+{
+maxZoom: 19
+}
+).addTo(map);
+
+let capaActual;
+let colorFn;
+
+// =======================
+// ESCALA POR CUANTILES
+// =======================
+function createQuantileScale(values){
+
+values = values
+.filter(v => v !== null && v !== undefined && !isNaN(v))
+.sort((a,b)=>a-b);
+
+function q(p){
+return values[Math.floor(values.length * p)];
+}
+
+const q1 = q(0.2);
+const q2 = q(0.4);
+const q3 = q(0.6);
+const q4 = q(0.8);
+
+return function(v){
+
+if(v <= q1) return "#d73027"; // rojo
+if(v <= q2) return "#fc8d59"; // naranja
+if(v <= q3) return "#fee08b"; // amarillo
+if(v <= q4) return "#91cf60"; // verde claro
+return "#1a9850"; // verde fuerte
+
+};
+
+}
+
+// =======================
+// LEYENDA (SIMBOLOGÍA)
+// =======================
+const legend = L.control({position: 'bottomright'});
+
+legend.onAdd = function(){
+
+const div = L.DomUtil.create('div','legend');
+
+div.innerHTML = `
+<b>MSAVI (Áreas verdes)</b><br><br>
+
+<span style="color:#d73027">■</span> Muy baja (&lt; -5%)<br>
+<span style="color:#fc8d59">■</span> Baja (5% - 15%)<br>
+<span style="color:#fee08b">■</span> Moderado (15% - 30%)<br>
+<span style="color:#91cf60">■</span> Alta (25% - 40%)<br>
+<span style="color:#1a9850">■</span> Muy alta (&gt; 40%)<br>
+`;
+
+return div;
+};
+
+legend.addTo(map);
+
+// =======================
+// CARGAR CATÁLOGO
+// =======================
+fetch("catalogo.json")
+.then(res => res.json())
+.then(data => {
+
+const selector = document.getElementById("selector");
+
+data.forEach(c => {
+let opt = document.createElement("option");
+opt.value = c.ruta;
+opt.text = `${c.nombre} (${c.estado})`;
+selector.appendChild(opt);
+});
+
+});
+
+// =======================
+// SELECCIÓN CIUDAD
+// =======================
+document.getElementById("selector").addEventListener("change", async function(){
+
+if(capaActual){
+map.removeLayer(capaActual);
+}
+
+if(!this.value) return;
+
+const res = await fetch(this.value);
+const geo = await res.json();
+
+// MSAVI mean
+let valores = geo.features
+.map(f => f.properties.MSAVI_mean)
+.filter(v => v !== null && v !== undefined && !isNaN(v));
+
+colorFn = createQuantileScale(valores);
+
+// DIBUJO
+capaActual = L.geoJSON(geo, {
+
+style: function(feature){
+return {
+fillColor: colorFn(feature.properties.MSAVI_mean),
+fillOpacity: 0.8,
+weight: 0.3,
+color: "#000"
+};
+},
+
+onEachFeature: function(feature, layer){
+
+let col = feature.properties.nom_col || "Sin nombre";
+let msavi = feature.properties.MSAVI_mean ?? "NA";
+
+layer.bindPopup(
+`<b>Colonia:</b> ${col}<br><b>MSAVI (media):</b> ${msavi}`
+);
+
+layer.bindTooltip(
+`${col} | MSAVI: ${msavi}`,
+{
+sticky: true,
+direction: "top"
+}
+);
+
+}
+
+}).addTo(map);
+
+map.fitBounds(capaActual.getBounds());
+
+});
+
+</script>
+
+</body>
+</html>

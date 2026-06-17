@@ -1,0 +1,87 @@
+[
+  {
+    "nombre": "CDMX",
+    "estado": "CDMX",
+    "ruta": "data/CDMX/CDMX.geojson"
+  },
+  {
+    "nombre": "Chihuahua",
+    "estado": "Chihuahua",
+    "ruta": "data/Chihuahua/Chihuahua.geojson"
+  },
+  {
+    "nombre": "Saltillo",
+    "estado": "Coahuila",
+    "ruta": "data/Coahuila/Saltillo.geojson"
+  },
+  {
+    "nombre": "Torreón",
+    "estado": "Coahuila",
+    "ruta": "data/Coahuila/Torreón.geojson"
+  },
+  {
+    "nombre": "Ecatepec",
+    "estado": "EDOMX",
+    "ruta": "data/EDOMX/Ecatepec.geojson"
+  },
+  {
+    "nombre": "Toluca",
+    "estado": "EDOMX",
+    "ruta": "data/EDOMX/Toluca.geojson"
+  },
+  {
+    "nombre": "León",
+    "estado": "Guanajuato",
+    "ruta": "data/Guanajuato/León.geojson"
+  },
+  {
+    "nombre": "Acapulco",
+    "estado": "Guerrero",
+    "ruta": "data/Guerrero/Acapulco.geojson"
+  },
+  {
+    "nombre": "Pachuca",
+    "estado": "Hidalgo",
+    "ruta": "data/Hidalgo/Pachuca.geojson"
+  },
+  {
+    "nombre": "Guadalajara",
+    "estado": "Jalisco",
+    "ruta": "data/Jalisco/Guadalajara.geojson"
+  },
+  {
+    "nombre": "Morelia",
+    "estado": "Michoacan",
+    "ruta": "data/Michoacan/Morelia.geojson"
+  },
+  {
+    "nombre": "Monterrey",
+    "estado": "NuevoLeon",
+    "ruta": "data/NuevoLeon/Monterrey.geojson"
+  },
+  {
+    "nombre": "Oaxaca",
+    "estado": "Oaxaca",
+    "ruta": "data/Oaxaca/Oaxaca.geojson"
+  },
+  {
+    "nombre": "Puebla",
+    "estado": "Puebla",
+    "ruta": "data/Puebla/Puebla.geojson"
+  },
+  {
+    "nombre": "Querétaro",
+    "estado": "Querétaro",
+    "ruta": "data/Querétaro/Querétaro.geojson"
+  },
+  {
+    "nombre": "SanLuisPotosí",
+    "estado": "S.L.P",
+    "ruta": "data/S.L.P/SanLuisPotosí.geojson"
+  },
+  {
+    "nombre": "Veracruz",
+    "estado": "Veracruz",
+    "ruta": "data/Veracruz/Veracruz.geojson"
+  }
+]
