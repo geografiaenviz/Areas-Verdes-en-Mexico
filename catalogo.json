@@ -1,8 +1,33 @@
 [
   {
+    "nombre": "Aguascalientes",
+    "estado": "Aguascalientes",
+    "ruta": "data/Aguascalientes/Aguascalientes.geojson"
+  },
+  {
+    "nombre": "Tijuana",
+    "estado": "B.C.N",
+    "ruta": "data/B.C.N/Tijuana.geojson"
+  },
+  {
+    "nombre": "La Paz",
+    "estado": "B.C.S",
+    "ruta": "data/B.C.S/La Paz.geojson"
+  },
+  {
+    "nombre": "Campeche",
+    "estado": "Campeche",
+    "ruta": "data/Campeche/Campeche.geojson"
+  },
+  {
     "nombre": "CDMX",
     "estado": "CDMX",
     "ruta": "data/CDMX/CDMX.geojson"
+  },
+  {
+    "nombre": "Tuxtla Gutiérrez",
+    "estado": "Chiapas",
+    "ruta": "data/Chiapas/Tuxtla Gutiérrez.geojson"
   },
   {
     "nombre": "Chihuahua",
@@ -20,6 +45,16 @@
     "ruta": "data/Coahuila/Torreón.geojson"
   },
   {
+    "nombre": "Colima",
+    "estado": "Colima",
+    "ruta": "data/Colima/Colima.geojson"
+  },
+  {
+    "nombre": "Durango",
+    "estado": "Durango",
+    "ruta": "data/Durango/Durango.geojson"
+  },
+  {
     "nombre": "Ecatepec",
     "estado": "EDOMX",
     "ruta": "data/EDOMX/Ecatepec.geojson"
@@ -28,6 +63,11 @@
     "nombre": "Toluca",
     "estado": "EDOMX",
     "ruta": "data/EDOMX/Toluca.geojson"
+  },
+  {
+    "nombre": "Guanajuato",
+    "estado": "Guanajuato",
+    "ruta": "data/Guanajuato/Guanajuato.geojson"
   },
   {
     "nombre": "León",
@@ -55,6 +95,11 @@
     "ruta": "data/Michoacan/Morelia.geojson"
   },
   {
+    "nombre": "Tepic",
+    "estado": "Nayarit",
+    "ruta": "data/Nayarit/Tepic.geojson"
+  },
+  {
     "nombre": "Monterrey",
     "estado": "NuevoLeon",
     "ruta": "data/NuevoLeon/Monterrey.geojson"
@@ -75,13 +120,38 @@
     "ruta": "data/Querétaro/Querétaro.geojson"
   },
   {
+    "nombre": "Cozumel",
+    "estado": "Quintana Roo",
+    "ruta": "data/Quintana Roo/Cozumel.geojson"
+  },
+  {
     "nombre": "SanLuisPotosí",
     "estado": "S.L.P",
     "ruta": "data/S.L.P/SanLuisPotosí.geojson"
   },
   {
+    "nombre": "Culiacan",
+    "estado": "Sinaloa",
+    "ruta": "data/Sinaloa/Culiacan.geojson"
+  },
+  {
+    "nombre": "Hermosillo",
+    "estado": "Sonora",
+    "ruta": "data/Sonora/Hermosillo.geojson"
+  },
+  {
+    "nombre": "Ciudad Victoria",
+    "estado": "Tamaulipas",
+    "ruta": "data/Tamaulipas/Ciudad Victoria.geojson"
+  },
+  {
     "nombre": "Veracruz",
     "estado": "Veracruz",
     "ruta": "data/Veracruz/Veracruz.geojson"
+  },
+  {
+    "nombre": "Merida",
+    "estado": "Yucatan",
+    "ruta": "data/Yucatan/Merida.geojson"
   }
 ]
