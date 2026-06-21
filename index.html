@@ -17,8 +17,7 @@
 <p>
 <b>Datos satelitales 2025</b><br><br>
 🛰 Satélite + IA<br>
-💻 Código abierto
-Realizado por el Geógrafo:
+💻 Realizado por el Geógrafo:
 Jorge Ibares<br><br>
 </p>
 
@@ -65,23 +64,6 @@ if(v <= q4) return "#91cf60";
 return "#1a9850";
 };
 }
-
-const legend = L.control({position: 'bottomright'});
-
-legend.onAdd = function(){
-const div = L.DomUtil.create('div','legend');
-div.innerHTML = `
-<b>MSAVI</b><br><br>
-<span style="color:#d73027">■</span> Muy baja<br>
-<span style="color:#fc8d59">■</span> Baja<br>
-<span style="color:#fee08b">■</span> Media<br>
-<span style="color:#91cf60">■</span> Alta<br>
-<span style="color:#1a9850">■</span> Muy alta<br>
-`;
-return div;
-};
-
-legend.addTo(map);
 
 fetch("catalogo.json")
 .then(r => r.json())
@@ -131,13 +113,12 @@ const promedio = (valores.reduce((a,b)=>a+b,0)/valores.length).toFixed(3);
 document.getElementById("statsCiudad").innerHTML = `
 🏘️ Colonias: ${valores.length}<br>
 🌳 MSAVI promedio: ${promedio}<br><br>
-🔴 Muy bajo: ${c1}<br>
-🟠 Bajo: ${c2}<br>
-🟡 Medio: ${c3}<br>
-🟢 Alto: ${c4}<br>
-🟢🟢 Muy alto: ${c5}
+🔴 Muy bajo (<5%) : ${c1}<br>
+🟠 Bajo (5–15%) : ${c2}<br>
+🟡 Medio (15–30%) : ${c3}<br>
+🟢 Alto (30–40%) : ${c4}<br>
+🟢🟢 Muy alto (>40%) : ${c5}
 `;
-
 const colorFn = createQuantileScale(valores);
 
 capaActual = L.geoJSON(geo,{
