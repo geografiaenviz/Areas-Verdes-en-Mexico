@@ -5,6 +5,11 @@
     "ruta": "data/Aguascalientes/Aguascalientes.geojson"
   },
   {
+    "nombre": "Mexicali",
+    "estado": "B.C.N",
+    "ruta": "data/B.C.N/Mexicali.geojson"
+  },
+  {
     "nombre": "Tijuana",
     "estado": "B.C.N",
     "ruta": "data/B.C.N/Tijuana.geojson"
@@ -33,6 +38,11 @@
     "nombre": "Chihuahua",
     "estado": "Chihuahua",
     "ruta": "data/Chihuahua/Chihuahua.geojson"
+  },
+  {
+    "nombre": "Ciudad Juarez",
+    "estado": "Chihuahua",
+    "ruta": "data/Chihuahua/Ciudad Juarez.geojson"
   },
   {
     "nombre": "Saltillo",
@@ -65,9 +75,19 @@
     "ruta": "data/EDOMX/Toluca.geojson"
   },
   {
+    "nombre": "Celaya",
+    "estado": "Guanajuato",
+    "ruta": "data/Guanajuato/Celaya.geojson"
+  },
+  {
     "nombre": "Guanajuato",
     "estado": "Guanajuato",
     "ruta": "data/Guanajuato/Guanajuato.geojson"
+  },
+  {
+    "nombre": "Irapuato",
+    "estado": "Guanajuato",
+    "ruta": "data/Guanajuato/Irapuato.geojson"
   },
   {
     "nombre": "León",
@@ -80,6 +100,11 @@
     "ruta": "data/Guerrero/Acapulco.geojson"
   },
   {
+    "nombre": "Iguala",
+    "estado": "Guerrero",
+    "ruta": "data/Guerrero/Iguala.geojson"
+  },
+  {
     "nombre": "Pachuca",
     "estado": "Hidalgo",
     "ruta": "data/Hidalgo/Pachuca.geojson"
@@ -90,9 +115,19 @@
     "ruta": "data/Jalisco/Guadalajara.geojson"
   },
   {
+    "nombre": "Puerto Vallarta",
+    "estado": "Jalisco",
+    "ruta": "data/Jalisco/Puerto Vallarta.geojson"
+  },
+  {
     "nombre": "Morelia",
     "estado": "Michoacan",
     "ruta": "data/Michoacan/Morelia.geojson"
+  },
+  {
+    "nombre": "Cuernavaca",
+    "estado": "Morelos",
+    "ruta": "data/Morelos/Cuernavaca.geojson"
   },
   {
     "nombre": "Tepic",
@@ -120,6 +155,11 @@
     "ruta": "data/Querétaro/Querétaro.geojson"
   },
   {
+    "nombre": "Cancun",
+    "estado": "Quintana Roo",
+    "ruta": "data/Quintana Roo/Cancun.geojson"
+  },
+  {
     "nombre": "Cozumel",
     "estado": "Quintana Roo",
     "ruta": "data/Quintana Roo/Cozumel.geojson"
@@ -140,9 +180,19 @@
     "ruta": "data/Sonora/Hermosillo.geojson"
   },
   {
+    "nombre": "Villahermosa",
+    "estado": "Tabasco",
+    "ruta": "data/Tabasco/Villahermosa.geojson"
+  },
+  {
     "nombre": "Ciudad Victoria",
     "estado": "Tamaulipas",
     "ruta": "data/Tamaulipas/Ciudad Victoria.geojson"
+  },
+  {
+    "nombre": "Matamoros",
+    "estado": "Tamaulipas",
+    "ruta": "data/Tamaulipas/Matamoros.geojson"
   },
   {
     "nombre": "Veracruz",
@@ -150,8 +200,18 @@
     "ruta": "data/Veracruz/Veracruz.geojson"
   },
   {
+    "nombre": "Xalapa",
+    "estado": "Veracruz",
+    "ruta": "data/Veracruz/Xalapa.geojson"
+  },
+  {
     "nombre": "Merida",
     "estado": "Yucatan",
     "ruta": "data/Yucatan/Merida.geojson"
+  },
+  {
+    "nombre": "Zacatecas",
+    "estado": "Zacatecas",
+    "ruta": "data/Zacatecas/Zacatecas.geojson"
   }
 ]
