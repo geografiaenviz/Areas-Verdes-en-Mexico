@@ -4,7 +4,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Geoportal Áreas Verdes México</title>
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
@@ -22,10 +21,13 @@ position: absolute;
 top: 10px;
 left: 10px;
 z-index: 1000;
-width: 320px;
+width: 350px;
 padding: 15px;
 background: rgba(20,20,20,0.95);
 border-radius: 10px;
+backdrop-filter: blur(10px);
+border: 1px solid rgba(255,255,255,.08);
+box-shadow: 0 0 25px rgba(0,0,0,.45);
 }
 
 #map {
@@ -38,7 +40,6 @@ padding: 10px;
 font-size: 15px;
 }
 
-/* LEYENDA */
 .legend {
 background: rgba(20,20,20,0.9);
 padding: 10px;
@@ -47,6 +48,28 @@ color: white;
 font-size: 13px;
 line-height: 18px;
 }
+
+#statsPanel{
+position:absolute;
+top:15px;
+right:15px;
+z-index:1000;
+width:260px;
+background:rgba(20,20,20,.92);
+padding:18px;
+border-radius:16px;
+color:white;
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,.08);
+box-shadow:0 0 25px rgba(0,0,0,.45);
+}
+
+#statsCiudad{
+line-height:1.8;
+font-size:14px;
+}
+
+h2{margin-top:0;font-size:22px;}
 </style>
 
 </head>
@@ -54,12 +77,25 @@ line-height: 18px;
 <body>
 
 <div id="panel">
-<h2>Geoportal Áreas Verdes México</h2>
-<p>Geografia_en_VIZ</p>
+<h2>🌳 Observatorio de Áreas Verdes Urbanas de México</h2>
+<p>
+<b>Datos satelitales 2025</b><br><br>
+🛰 Satélite + IA<br>
+💻 Código abierto
+Realizado por el Geógrafo:
+Jorge Ibares<br><br>
+</p>
+
+<div id="contadorCiudades"></div>
 
 <select id="selector">
 <option value="">Selecciona una ciudad</option>
 </select>
+</div>
+
+<div id="statsPanel">
+<h3>📊 Estadísticas</h3>
+<div id="statsCiudad">Selecciona una ciudad</div>
 </div>
 
 <div id="map"></div>
@@ -68,33 +104,17 @@ line-height: 18px;
 
 <script>
 
-// =======================
-// MAPA BASE
-// =======================
 const map = L.map('map').setView([23, -102], 5);
 
-L.tileLayer(
-'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-{
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
 maxZoom: 19
-}
-).addTo(map);
+}).addTo(map);
 
 let capaActual;
-let colorFn;
 
-// =======================
-// ESCALA POR CUANTILES
-// =======================
 function createQuantileScale(values){
-
-values = values
-.filter(v => v !== null && v !== undefined && !isNaN(v))
-.sort((a,b)=>a-b);
-
-function q(p){
-return values[Math.floor(values.length * p)];
-}
+values = values.filter(v => v != null && !isNaN(v)).sort((a,b)=>a-b);
+const q = p => values[Math.floor(values.length * p)];
 
 const q1 = q(0.2);
 const q2 = q(0.4);
@@ -102,115 +122,105 @@ const q3 = q(0.6);
 const q4 = q(0.8);
 
 return function(v){
-
-if(v <= q1) return "#d73027"; // rojo
-if(v <= q2) return "#fc8d59"; // naranja
-if(v <= q3) return "#fee08b"; // amarillo
-if(v <= q4) return "#91cf60"; // verde claro
-return "#1a9850"; // verde fuerte
-
+if(v <= q1) return "#d73027";
+if(v <= q2) return "#fc8d59";
+if(v <= q3) return "#fee08b";
+if(v <= q4) return "#91cf60";
+return "#1a9850";
 };
-
 }
 
-// =======================
-// LEYENDA (SIMBOLOGÍA)
-// =======================
 const legend = L.control({position: 'bottomright'});
 
 legend.onAdd = function(){
-
 const div = L.DomUtil.create('div','legend');
-
 div.innerHTML = `
-<b>MSAVI (Áreas verdes)</b><br><br>
-
-<span style="color:#d73027">■</span> Muy baja (&lt; -5%)<br>
-<span style="color:#fc8d59">■</span> Baja (5% - 15%)<br>
-<span style="color:#fee08b">■</span> Moderado (15% - 30%)<br>
-<span style="color:#91cf60">■</span> Alta (25% - 40%)<br>
-<span style="color:#1a9850">■</span> Muy alta (&gt; 40%)<br>
+<b>MSAVI</b><br><br>
+<span style="color:#d73027">■</span> Muy baja<br>
+<span style="color:#fc8d59">■</span> Baja<br>
+<span style="color:#fee08b">■</span> Media<br>
+<span style="color:#91cf60">■</span> Alta<br>
+<span style="color:#1a9850">■</span> Muy alta<br>
 `;
-
 return div;
 };
 
 legend.addTo(map);
 
-// =======================
-// CARGAR CATÁLOGO
-// =======================
 fetch("catalogo.json")
-.then(res => res.json())
+.then(r => r.json())
 .then(data => {
+
+document.getElementById("contadorCiudades").innerHTML =
+`🌎 ${data.length} ciudades disponibles`;
 
 const selector = document.getElementById("selector");
 
-data.forEach(c => {
+data.forEach(c=>{
 let opt = document.createElement("option");
 opt.value = c.ruta;
 opt.text = `${c.nombre} (${c.estado})`;
 selector.appendChild(opt);
 });
-
 });
 
-// =======================
-// SELECCIÓN CIUDAD
-// =======================
 document.getElementById("selector").addEventListener("change", async function(){
 
-if(capaActual){
-map.removeLayer(capaActual);
-}
-
+if(capaActual) map.removeLayer(capaActual);
 if(!this.value) return;
 
 const res = await fetch(this.value);
 const geo = await res.json();
 
-// MSAVI mean
 let valores = geo.features
 .map(f => f.properties.MSAVI_mean)
-.filter(v => v !== null && v !== undefined && !isNaN(v));
+.filter(v => v != null && !isNaN(v));
 
-colorFn = createQuantileScale(valores);
+const sorted = [...valores].sort((a,b)=>a-b);
+const q = p => sorted[Math.floor(sorted.length * p)];
 
-// DIBUJO
-capaActual = L.geoJSON(geo, {
+const q1 = q(0.2);
+const q2 = q(0.4);
+const q3 = q(0.6);
+const q4 = q(0.8);
 
-style: function(feature){
-return {
-fillColor: colorFn(feature.properties.MSAVI_mean),
+const c1 = valores.filter(v => v <= q1).length;
+const c2 = valores.filter(v => v > q1 && v <= q2).length;
+const c3 = valores.filter(v => v > q2 && v <= q3).length;
+const c4 = valores.filter(v => v > q3 && v <= q4).length;
+const c5 = valores.filter(v => v > q4).length;
+
+const promedio = (valores.reduce((a,b)=>a+b,0)/valores.length).toFixed(3);
+
+document.getElementById("statsCiudad").innerHTML = `
+🏘️ Colonias: ${valores.length}<br>
+🌳 MSAVI promedio: ${promedio}<br><br>
+🔴 Muy bajo: ${c1}<br>
+🟠 Bajo: ${c2}<br>
+🟡 Medio: ${c3}<br>
+🟢 Alto: ${c4}<br>
+🟢🟢 Muy alto: ${c5}
+`;
+
+const colorFn = createQuantileScale(valores);
+
+capaActual = L.geoJSON(geo,{
+style: f => ({
+fillColor: colorFn(f.properties.MSAVI_mean),
 fillOpacity: 0.8,
 weight: 0.3,
 color: "#000"
-};
-},
+}),
+onEachFeature: (f,l)=>{
+let col = f.properties.nom_col || "Sin nombre";
+let msavi = f.properties.MSAVI_mean;
 
-onEachFeature: function(feature, layer){
-
-let col = feature.properties.nom_col || "Sin nombre";
-let msavi = feature.properties.MSAVI_mean ?? "NA";
-
-layer.bindPopup(
-`<b>Colonia:</b> ${col}<br><b>MSAVI (media):</b> ${msavi}`
-);
-
-layer.bindTooltip(
-`${col} | MSAVI: ${msavi}`,
-{
-sticky: true,
-direction: "top"
+l.bindPopup(`<b>${col}</b><br>MSAVI: ${msavi}`);
+l.bindTooltip(`${col} | ${msavi}`,{sticky:true});
 }
-);
-
-}
-
 }).addTo(map);
 
-map.fitBounds(capaActual.getBounds());
-
+map.flyToBounds(capaActual.getBounds(),{padding:[40,40],duration:1.8});
 });
 
 </script>
