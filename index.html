@@ -47,24 +47,26 @@ maxZoom: 19
 
 let capaActual;
 
-function createQuantileScale(values){
-values = values.filter(v => v != null && !isNaN(v)).sort((a,b)=>a-b);
-const q = p => values[Math.floor(values.length * p)];
+function colorFn(v){
 
-const q1 = q(0.2);
-const q2 = q(0.4);
-const q3 = q(0.6);
-const q4 = q(0.8);
+if(v == null || isNaN(v))
+return "#666666";
 
-return function(v){
-if(v <= q1) return "#d73027";
-if(v <= q2) return "#fc8d59";
-if(v <= q3) return "#fee08b";
-if(v <= q4) return "#91cf60";
+if(v <= 0.123)
+return "#d73027";
+
+if(v <= 0.153)
+return "#fc8d59";
+
+if(v <= 0.20)
+return "#fee08b";
+
+if(v <= 0.30)
+return "#91cf60";
+
 return "#1a9850";
-};
-}
 
+}
 fetch("catalogo.json")
 .then(r => r.json())
 .then(data => {
@@ -94,19 +96,23 @@ let valores = geo.features
 .map(f => f.properties.MSAVI_mean)
 .filter(v => v != null && !isNaN(v));
 
-const sorted = [...valores].sort((a,b)=>a-b);
-const q = p => sorted[Math.floor(sorted.length * p)];
+const c1 = valores.filter(v => v <= 0.123).length;
 
-const q1 = q(0.2);
-const q2 = q(0.4);
-const q3 = q(0.6);
-const q4 = q(0.8);
+const c2 = valores.filter(
+v => v > 0.123 && v <= 0.153
+).length;
 
-const c1 = valores.filter(v => v <= q1).length;
-const c2 = valores.filter(v => v > q1 && v <= q2).length;
-const c3 = valores.filter(v => v > q2 && v <= q3).length;
-const c4 = valores.filter(v => v > q3 && v <= q4).length;
-const c5 = valores.filter(v => v > q4).length;
+const c3 = valores.filter(
+v => v > 0.153 && v <= 0.20
+).length;
+
+const c4 = valores.filter(
+v => v > 0.20 && v <= 0.30
+).length;
+
+const c5 = valores.filter(
+v => v > 0.30
+).length;
 
 const promedio = (valores.reduce((a,b)=>a+b,0)/valores.length).toFixed(3);
 
@@ -119,7 +125,6 @@ document.getElementById("statsCiudad").innerHTML = `
 🟢 Alto (30–40%) : ${c4}<br>
 🟢🟢 Muy alto (>40%) : ${c5}
 `;
-const colorFn = createQuantileScale(valores);
 
 capaActual = L.geoJSON(geo,{
 style: f => ({

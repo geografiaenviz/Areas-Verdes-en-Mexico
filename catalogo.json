@@ -70,6 +70,11 @@
     "ruta": "data/EDOMX/Ecatepec.geojson"
   },
   {
+    "nombre": "Nezahualcóyotl",
+    "estado": "EDOMX",
+    "ruta": "data/EDOMX/Nezahualcóyotl.geojson"
+  },
+  {
     "nombre": "Toluca",
     "estado": "EDOMX",
     "ruta": "data/EDOMX/Toluca.geojson"
@@ -98,6 +103,11 @@
     "nombre": "Acapulco",
     "estado": "Guerrero",
     "ruta": "data/Guerrero/Acapulco.geojson"
+  },
+  {
+    "nombre": "Chilpancingo",
+    "estado": "Guerrero",
+    "ruta": "data/Guerrero/Chilpancingo.geojson"
   },
   {
     "nombre": "Iguala",
@@ -150,6 +160,11 @@
     "ruta": "data/Puebla/Puebla.geojson"
   },
   {
+    "nombre": "Tehuacán",
+    "estado": "Puebla",
+    "ruta": "data/Puebla/Tehuacán.geojson"
+  },
+  {
     "nombre": "Querétaro",
     "estado": "Querétaro",
     "ruta": "data/Querétaro/Querétaro.geojson"
@@ -175,6 +190,11 @@
     "ruta": "data/Sinaloa/Culiacan.geojson"
   },
   {
+    "nombre": "Mazatlán",
+    "estado": "Sinaloa",
+    "ruta": "data/Sinaloa/Mazatlán.geojson"
+  },
+  {
     "nombre": "Hermosillo",
     "estado": "Sonora",
     "ruta": "data/Sonora/Hermosillo.geojson"
@@ -193,6 +213,16 @@
     "nombre": "Matamoros",
     "estado": "Tamaulipas",
     "ruta": "data/Tamaulipas/Matamoros.geojson"
+  },
+  {
+    "nombre": "Tampico",
+    "estado": "Tamaulipas",
+    "ruta": "data/Tamaulipas/Tampico.geojson"
+  },
+  {
+    "nombre": "Coatzacoalcos",
+    "estado": "Veracruz",
+    "ruta": "data/Veracruz/Coatzacoalcos.geojson"
   },
   {
     "nombre": "Veracruz",
